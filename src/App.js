@@ -4,7 +4,8 @@ import './style.css';
 export default function App() {
   const [turn, setTurn] = useState('X');
   const [cells, setCells] = useState(Array(9).fill(''));
-  const [winner, setWinner] = useState('');
+  const [winner, setWinner] = useState(null);
+  const [draw, setDraw] = useState(false);
   const checkForWinner = (squares) => {
     let combos = {
       across: [
@@ -40,11 +41,19 @@ export default function App() {
     }
   };
   const handelClick = (num) => {
+    let squares = [...cells];
     if (cells[num] !== '') {
       alert('Already clicked');
       return;
     }
-    let squares = [...cells];
+    // if (winner == null) {
+    //   for (var i = 0; i <= 8; i++) {
+    //     if (squares[i] !== '') {
+    //       console.log(squares[i]);
+    //       setDraw(true);
+    //     }
+    //   }
+    // }
     if (turn === 'X') {
       squares[num] = 'X';
       setTurn('O');
@@ -87,6 +96,12 @@ export default function App() {
       {winner && (
         <>
           <h3> {winner} is the winner!</h3>
+          <button onClick={restart}>Play again</button>
+        </>
+      )}
+      {draw && (
+        <>
+          <h3> Draw!</h3>
           <button onClick={restart}>Play again</button>
         </>
       )}
