@@ -45,26 +45,29 @@ export default function App() {
           squares[pattern[1]] === squares[pattern[2]]
         ) {
           setWinner(squares[pattern[0]]);
+          setDraw(false);
         }
       });
     }
   };
   const handelClick = (num) => {
-    let squares = [...cells];
-    if (cells[num] !== '') {
-      alert('Already clicked');
-      return;
-    }
+    if (winner === null) {
+      let squares = [...cells];
+      if (cells[num] !== '') {
+        alert('Already clicked');
+        return;
+      }
 
-    if (turn === 'X') {
-      squares[num] = 'X';
-      setTurn('O');
-    } else {
-      setTurn('X');
-      squares[num] = 'O';
+      if (turn === 'X') {
+        squares[num] = 'X';
+        setTurn('O');
+      } else {
+        setTurn('X');
+        squares[num] = 'O';
+      }
+      setCells(squares);
+      checkForWinner(squares);
     }
-    setCells(squares);
-    checkForWinner(squares);
   };
   const Cell = ({ num }) => {
     return <td onClick={() => handelClick(num)}>{cells[num]}</td>;
