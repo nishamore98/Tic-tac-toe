@@ -7,6 +7,15 @@ export default function App() {
   const [winner, setWinner] = useState(null);
   const [draw, setDraw] = useState(false);
   const checkForWinner = (squares) => {
+    let draw = false; // Initialize draw to false
+    squares.forEach((cell) => {
+      if (cell === '') {
+        draw = true; // Set draw to true if any cell is empty
+      }
+    });
+    if (!draw) {
+      setDraw(true); // Set draw to true if no cells are empty
+    }
     let combos = {
       across: [
         [0, 1, 2],
@@ -30,7 +39,7 @@ export default function App() {
           squares[pattern[1]] === '' ||
           squares[pattern[2]] === ''
         ) {
-          //do nothing
+          // Do nothing
         } else if (
           squares[pattern[0]] === squares[pattern[1]] &&
           squares[pattern[1]] === squares[pattern[2]]
@@ -46,14 +55,7 @@ export default function App() {
       alert('Already clicked');
       return;
     }
-    // if (winner == null) {
-    //   for (var i = 0; i <= 8; i++) {
-    //     if (squares[i] !== '') {
-    //       console.log(squares[i]);
-    //       setDraw(true);
-    //     }
-    //   }
-    // }
+
     if (turn === 'X') {
       squares[num] = 'X';
       setTurn('O');
@@ -69,12 +71,13 @@ export default function App() {
   };
   const restart = () => {
     setWinner(null);
+    setDraw(false);
     setCells(Array(9).fill(''));
   };
   return (
     <div className="container">
+      <h3>Turn : {turn}</h3>
       <table>
-        Turn : {turn}
         <tbody>
           <tr>
             <Cell num={0} />
